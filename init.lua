@@ -76,6 +76,9 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
+  -- Harpoon
+  'theprimeagen/harpoon',
+
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   {
@@ -189,12 +192,21 @@ require('lazy').setup({
     },
   },
 
+--  {
+--    -- Theme inspired by Atom
+--    'navarasu/onedark.nvim',
+--    priority = 1000,
+--    config = function()
+--      vim.cmd.colorscheme 'onedark'
+--    end,
+--  },
   {
-    -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
+    'folke/tokyonight.nvim',
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'onedark'
+      vim.cmd.colorscheme 'tokyonight'
+      vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+      vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
     end,
   },
 
@@ -285,7 +297,16 @@ vim.o.mouse = 'a'
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.o.clipboard = 'unnamedplus'
+--vim.o.clipboard = 'unnamedplus'
+
+--tabs
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+vim.o.shiftwidth = 4
+vim.o.expandtab = false
+--vim.o.expandtab = true
+
+vim.o.smartindent = true
 
 -- Enable break indent
 vim.o.breakindent = true
@@ -310,7 +331,78 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
+vim.o.relativenumber = true
+vim.opt.listchars = { -- set non visible characters place holders
+  tab = "▸ ",
+  eol = "↲",
+  space = '·',
+  nbsp = '␣',
+  trail = '█',
+  extends = '⟩',
+  precedes = '⟨'
+}
+vim.o.list = true -- show/hide non visible characters
+
+vim.o.swapfile = false
+
+vim.o.spelllang = "en_us"
+vim.o.spell = true
+
+--vim.o.wrap = true
+vim.o.wrap = false
+
+vim.o.exrc = true
+
+
 -- [[ Basic Keymaps ]]
+vim.keymap.set('n', '<leader>km', ":Telescope keymaps<CR>", { desc = 'View existing keymaps (This panel)' })
+vim.keymap.set('n', '<leader>`', ":set list!<CR>", { desc = 'Show/Hide hidden characters' })
+--vim.keymap.set('n', '<leader>l', ":set spell!<CR>")
+vim.keymap.set('n', '<leader>l', ":set spell! spelllang=en_us,ro<CR>", { desc = 'Toggle language spell' })
+
+vim.keymap.set("n", "<leader>pd", vim.cmd.Ex, { desc = 'Open project directory' })
+
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = 'Shift selected line down' })
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = 'Shift selected line up' })
+
+vim.keymap.set("n", "<C-d>", "<C-d>zz")   -- Keep cursor in the middle on half page down
+vim.keymap.set("n", "<C-u>", "<C-u>zz")   -- Keep cursor in the middle on half page up
+
+vim.keymap.set("n", "n", "nzzzv")         -- Keep cursor in the middle on search
+vim.keymap.set("n", "N", "Nzzzv")         -- Keep cursor in the middle on search
+
+vim.keymap.set("x", "<leader>p", "\"_dP") -- Yank in void register on put to preserve current yanked register. Helpful on repeated puts.
+
+vim.keymap.set("n", "<leader>y", "\"+y", { desc = 'yank in system clipboard' })
+vim.keymap.set("v", "<leader>y", "\"+y", { desc = 'yank in system clipboard' })
+vim.keymap.set("n", "<leader>Y", "\"+Y") --Yank in system clipboard
+
+vim.keymap.set("n", "<leader>d", "\"_d") --Yank in system clipboard
+vim.keymap.set("v", "<leader>d", "\"_d") --Yank in system clipboard
+
+vim.keymap.set('n', '<leader>f', function()
+  vim.lsp.buf.format()
+end, { desc = 'Format file to language' })
+
+
+vim.keymap.set('n', '<leader>m', ":make<CR>", { desc = 'Invoke :make' })
+vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz", { desc = 'Quick fix next' }) -- Quick fix list. see :help quickfix
+vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz", { desc = 'Quick Fix prev' }) -- Quick fix list. see :help quickfix
+--vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz") -- Quick fix list. see :help quickfix
+--vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz") -- Quick fix list. see :help quickfix
+
+vim.keymap.set("n", "<leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>") -- replace find under cursor in all file
+-- vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })              -- make current file executable
+
+
+-- vim.keymap.set("n", "<leader>hw", "<cmd>echo 'windo wincmd H'<CR>") --Change window layout to horizontal
+-- vim.keymap.set("n", "<leader>vw,", "<cmd>echo 'windo wincmd K'<CR>") --Change window layout to Vertical
+
+vim.keymap.set("n", "<leader>rtw", "<cmd>:%s/\\s\\+$//e<CR>")
+
+
+
+
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
@@ -656,6 +748,19 @@ cmp.setup {
     { name = 'path' },
   },
 }
+
+--Harpoon
+local harpoon_mark = require("harpoon.mark")
+local harpoon_ui = require("harpoon.ui")
+vim.keymap.set("n", "<leader>i", harpoon_mark.add_file)
+vim.keymap.set("n", "<A-Tab>", harpoon_ui.toggle_quick_menu)
+vim.keymap.set("n", "<A-a>", function() harpoon_ui.nav_file(1) end)
+vim.keymap.set("n", "<A-e>", function() harpoon_ui.nav_file(2) end)
+vim.keymap.set("n", "<A-o>", function() harpoon_ui.nav_file(3) end)
+vim.keymap.set("n", "<A-h>", function() harpoon_ui.nav_file(4) end)
+
+-- Auto format on write
+vim.cmd [[autocmd BufWrite * lua vim.lsp.buf.format()]]
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
