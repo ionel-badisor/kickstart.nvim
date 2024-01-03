@@ -79,6 +79,9 @@ require('lazy').setup({
   -- Harpoon
   'theprimeagen/harpoon',
 
+  -- run postgresql form vim
+  'mzarnitsa/psql',
+
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   {
@@ -270,7 +273,7 @@ require('lazy').setup({
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
   -- require 'kickstart.plugins.autoformat',
-  -- require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.debug',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
@@ -371,7 +374,7 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz")   -- Keep cursor in the middle on half p
 vim.keymap.set("n", "n", "nzzzv")         -- Keep cursor in the middle on search
 vim.keymap.set("n", "N", "Nzzzv")         -- Keep cursor in the middle on search
 
-vim.keymap.set("x", "<leader>p", "\"_dP") -- Yank in void register on put to preserve current yanked register. Helpful on repeated puts.
+vim.keymap.set("x", "<leader>P", "\"_dP") -- Yank in void register on put to preserve current yanked register. Helpful on repeated puts.
 
 vim.keymap.set("n", "<leader>y", "\"+y", { desc = 'yank in system clipboard' })
 vim.keymap.set("v", "<leader>y", "\"+y", { desc = 'yank in system clipboard' })
@@ -761,6 +764,12 @@ vim.keymap.set("n", "<A-h>", function() harpoon_ui.nav_file(4) end)
 
 -- Auto format on write
 vim.cmd [[autocmd BufWrite * lua vim.lsp.buf.format()]]
+
+require('psql').setup({
+  database_name = 'postgres -U postgres',
+  execute_line = '<leader>rq',
+  execute_selection = '<leader>rq',
+})
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
