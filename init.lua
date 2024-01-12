@@ -94,7 +94,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',       opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -756,7 +756,7 @@ cmp.setup {
 local harpoon_mark = require("harpoon.mark")
 local harpoon_ui = require("harpoon.ui")
 vim.keymap.set("n", "<leader>i", harpoon_mark.add_file)
-vim.keymap.set("n", "<A-Tab>", harpoon_ui.toggle_quick_menu)
+vim.keymap.set("n", "<leader><Tab>", harpoon_ui.toggle_quick_menu)
 vim.keymap.set("n", "<A-a>", function() harpoon_ui.nav_file(1) end)
 vim.keymap.set("n", "<A-e>", function() harpoon_ui.nav_file(2) end)
 vim.keymap.set("n", "<A-o>", function() harpoon_ui.nav_file(3) end)
