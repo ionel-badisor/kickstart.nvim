@@ -78,6 +78,7 @@ require('lazy').setup({
 
   -- Harpoon
   'theprimeagen/harpoon',
+  'mbbill/undotree',
 
   -- run postgresql form vim
   'mzarnitsa/psql',
@@ -761,6 +762,9 @@ vim.keymap.set("n", "<A-a>", function() harpoon_ui.nav_file(1) end)
 vim.keymap.set("n", "<A-e>", function() harpoon_ui.nav_file(2) end)
 vim.keymap.set("n", "<A-o>", function() harpoon_ui.nav_file(3) end)
 vim.keymap.set("n", "<A-h>", function() harpoon_ui.nav_file(4) end)
+
+-- Undo tree
+vim.keymap.set("n", "<leader>u", "<cmd>UndotreeToggle<CR>", { desc = 'Toggle undo tree' }) -- Toggle undo tree
 
 -- Auto format on write
 vim.cmd [[autocmd BufWrite * lua vim.lsp.buf.format()]]
