@@ -361,8 +361,9 @@ vim.o.exrc = true
 -- [[ Basic Keymaps ]]
 vim.keymap.set('n', '<leader>km', ":Telescope keymaps<CR>", { desc = 'View existing keymaps (This panel)' })
 vim.keymap.set('n', '<leader>`', ":set list!<CR>", { desc = 'Show/Hide hidden characters' })
---vim.keymap.set('n', '<leader>l', ":set spell!<CR>")
-vim.keymap.set('n', '<leader>l', ":set spell! spelllang=en_us,ro<CR>", { desc = 'Toggle language spell' })
+vim.keymap.set('n', '<leader>l<leader>', ":set spell!<CR>", { desc = 'Toggle language spell' })
+vim.keymap.set('n', '<leader>le', ":set spelllang=en_us<CR>", { desc = 'Change spell language to en_us' })
+vim.keymap.set('n', '<leader>lr', ":set spelllang=ro<CR>", { desc = 'Change spell language to ro' })
 
 vim.keymap.set("n", "<leader>pd", vim.cmd.Ex, { desc = 'Open project directory' })
 
