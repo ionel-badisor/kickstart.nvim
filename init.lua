@@ -1,5 +1,7 @@
 --[[
-
+-- TODO: map :cnext and :cprevious and for toggleing :TodoQuickFix
+-- TODO: port my config over this new config
+--
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
 =====================================================================
@@ -102,7 +104,7 @@ vim.g.have_nerd_font = false
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -114,9 +116,9 @@ vim.opt.showmode = false
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.schedule(function()
-  vim.opt.clipboard = 'unnamedplus'
-end)
+-- vim.schedule(function()
+--   vim.opt.clipboard = 'unnamedplus'
+-- end)
 
 -- Enable break indent
 vim.opt.breakindent = true
@@ -146,7 +148,20 @@ vim.opt.splitbelow = true
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+--vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.listchars = {
+  tab = '▸ ',
+  eol = '↲',
+  space = '·',
+  nbsp = '␣',
+  trail = '█',
+  extends = '⟩',
+  precedes = '⟨',
+}
+
+--spell language
+vim.o.spelllang = 'en_us'
+vim.o.spell = true
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
@@ -159,6 +174,17 @@ vim.opt.scrolloff = 10
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
+
+-- Toggle whitespace
+vim.keymap.set('n', '<leader>`', ':set list!<CR>', { desc = 'Show/Hide hidden characters' })
+
+-- Language spelling
+vim.keymap.set('n', '<leader>l<leader>', ':set spell!<CR>', { desc = 'Toggle language spell' })
+vim.keymap.set('n', '<leader>le', ':set spelllang=en_us<CR>', { desc = 'Change spell language to en_us' })
+vim.keymap.set('n', '<leader>lr', ':set spelllang=ro<CR>', { desc = 'Change spell language to ro' })
+
+-- Set highlight on search, but clear on pressing <Esc> in normal mode
+-- vim.opt.hlsearch = true
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
