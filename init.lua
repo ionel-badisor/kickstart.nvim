@@ -1,7 +1,9 @@
 --[[
--- TODO: map :cnext and :cprevious and for toggleing :TodoQuickFix
--- TODO: port my config over this new config
 --
+--
+ TODO: map :cnext and :cprevious and for toggleing :TodoQuickFix
+ TODO: port my config over this new config
+
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
 =====================================================================
@@ -226,6 +228,14 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
+vim.keymap.set('n', '<leader>y', '"+y', { desc = 'yank in system clipboard' }) --Yank in system clipboard
+vim.keymap.set('v', '<leader>y', '"+y', { desc = 'yank in system clipboard' }) --Yank in system clipboard
+vim.keymap.set('n', '<leader>Y', '"+Y', { desc = 'yank in system clipboard' }) --Yank in system clipboard
+
+vim.keymap.set('n', '<leader>d', '"_d', { desc = 'yank in system clipboard' }) --Yank from system clipboard
+vim.keymap.set('v', '<leader>d', '"_d', { desc = 'yank in system clipboard' }) --Yank from system clipboard
+
+vim.keymap.set('x', '<leader>p', '"_dP') -- Yank in void register on put to preserve current yanked register. Helpful on repeated puts.
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
