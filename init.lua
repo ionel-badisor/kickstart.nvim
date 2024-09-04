@@ -1,7 +1,7 @@
 --[[
 --
 --
- TODO: map :cnext and :cprevious and for toggleing :TodoQuickFix
+ TODO: map :cnext and :cprevious and for toggling :TodoQuickFix
  TODO: port my config over this new config
 
 =====================================================================
