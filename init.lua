@@ -272,11 +272,6 @@ require('lazy').setup({
   -- keys can be used to configure plugin behavior/loading/etc.
   --
   -- Use `opts = {}` to force a plugin to be loaded.
-
-  --  This is equivalent to:
-  --    require('Comment').setup({})
-  -- "gc" to comment visual regions/lines
-  -- { 'numToStr/Comment.nvim', opts = {} },
   {
     'mzarnitsa/psql', -- run postgresql form vim
     config = function()
