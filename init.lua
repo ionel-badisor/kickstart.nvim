@@ -234,6 +234,11 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- Show/Hide unprintable characters
 vim.keymap.set('n', '<leader>`', ':set list!<CR>', { desc = 'Show/Hide unprintable characters' })
 
+-- Language spelling
+vim.keymap.set('n', '<leader>l<leader>', ':set spell!<CR>', { desc = 'Toggle language spell' })
+vim.keymap.set('n', '<leader>le', ':set spelllang=en_us<CR>', { desc = 'Change spell language to en_us' })
+vim.keymap.set('n', '<leader>lr', ':set spelllang=ro<CR>', { desc = 'Change spell language to ro' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
