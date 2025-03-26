@@ -231,6 +231,9 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
+-- Show/Hide unprintable characters
+vim.keymap.set('n', '<leader>`', ':set list!<CR>', { desc = 'Show/Hide unprintable characters' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
