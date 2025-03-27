@@ -239,6 +239,9 @@ vim.keymap.set('n', '<leader>l<leader>', ':set spell!<CR>', { desc = 'Toggle lan
 vim.keymap.set('n', '<leader>le', ':set spelllang=en_us<CR>', { desc = 'Change spell language to en_us' })
 vim.keymap.set('n', '<leader>lr', ':set spelllang=ro<CR>', { desc = 'Change spell language to ro' })
 
+-- TODO quick fix
+vim.keymap.set('n', '<leader>otd', ':TodoQuickFix<CR>', { desc = 'Open TodoQuickFix' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
