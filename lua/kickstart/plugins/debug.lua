@@ -22,7 +22,7 @@ return {
     'jay-babu/mason-nvim-dap.nvim',
 
     -- Add your own debuggers here
-    'leoluz/nvim-dap-go',
+    --'leoluz/nvim-dap-go',
   },
   keys = {
     -- Basic debugging keymaps, feel free to change to your liking!
@@ -32,6 +32,13 @@ return {
         require('dap').continue()
       end,
       desc = 'Debug: Start/Continue',
+    },
+    {
+      '<F6>',
+      function()
+        require('dap').terminate()
+      end,
+      desc = 'Debug: Terminate',
     },
     {
       '<F1>',
@@ -81,6 +88,70 @@ return {
     local dap = require 'dap'
     local dapui = require 'dapui'
 
+    --setup gdb
+    dap.adapters.gdb = {
+      type = 'executable',
+      command = 'gdb',
+      args = { '--quiet', '--interpreter=dap' },
+    }
+
+    dap.configurations.c = {
+      {
+        name = 'Run executable (GDB)',
+        type = 'gdb',
+        request = 'launch',
+        program = function()
+          local path = vim.fn.input {
+            prompt = 'Path to executable: ',
+            default = vim.fn.getcwd() .. '/',
+            completion = 'file',
+          }
+
+          return (path and path ~= '') and path or dap.ABORT
+        end,
+        -- cwd = '${workspaceFolder}',
+        -- stopAtBeginningOfMainSubprogram = false,
+      },
+      {
+        name = 'Run executable with with arguments (GDB)',
+        type = 'gdb',
+        request = 'launch',
+        program = function()
+          local path = vim.fn.input {
+            prompt = 'Path to executable: ',
+            default = vim.fn.getcwd() .. '/',
+            completion = 'file',
+          }
+
+          return (path and path ~= '') and path or dap.ABORT
+        end,
+        cwd = '${workspaceFolder}',
+        stopAtBeginningOfMainSubprogram = false,
+        args = function()
+          local args_str = vim.fn.input {
+            prompt = 'Arguments: ',
+          }
+          return vim.split(args_str, ' +')
+        end,
+      },
+      {
+        name = 'Attach to process (GDB)',
+        type = 'gdb',
+        request = 'attach',
+        processId = require('dap.utils').pick_process,
+      },
+      {
+        name = 'Attach to gdbserver :1234',
+        type = 'gdb',
+        request = 'attach',
+        target = 'localhost:1234',
+        program = function()
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+      },
+    }
+
     require('mason-nvim-dap').setup {
       -- Makes a best effort to setup the various debuggers with
       -- reasonable debug configurations
@@ -94,7 +165,8 @@ return {
       -- online, please don't ask me how to install them :)
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
-        'delve',
+        -- 'delve',
+        gdb,
       },
     }
 
@@ -118,6 +190,42 @@ return {
           disconnect = '⏏',
         },
       },
+
+      layouts = {
+        {
+          elements = {
+            {
+              id = 'scopes',
+              size = 0.25,
+            },
+            {
+              id = 'breakpoints',
+              size = 0.25,
+            },
+            {
+              id = 'stacks',
+              size = 0.25,
+            },
+            {
+              id = 'watches',
+              size = 0.25,
+            },
+          },
+          position = 'right',
+          size = 40,
+        },
+        {
+          elements = { {
+            id = 'repl',
+            size = 0.5,
+          }, {
+            id = 'console',
+            size = 0.5,
+          } },
+          position = 'bottom',
+          size = 10,
+        },
+      },
     }
 
     -- Change breakpoint icons
@@ -137,12 +245,12 @@ return {
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
     -- Install golang specific config
-    require('dap-go').setup {
-      delve = {
-        -- On Windows delve must be run attached or it crashes.
-        -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
-        detached = vim.fn.has 'win32' == 0,
-      },
-    }
+    -- require('dap-go').setup {
+    --   delve = {
+    --     -- On Windows delve must be run attached or it crashes.
+    --     -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
+    --     detached = vim.fn.has 'win32' == 0,
+    --   },
+    -- }
   end,
 }
