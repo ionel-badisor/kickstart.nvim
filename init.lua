@@ -189,6 +189,10 @@ do
   vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
   vim.opt.foldtext = 'nvim.treesitter#foldtext()'
   vim.opt.foldenable = false
+
+  -- Load external/project configuration
+  vim.o.exrc = true
+  vim.secure = true
 end
 
 -- ============================================================
