@@ -269,6 +269,9 @@ do
 
   vim.keymap.set('x', '<leader>p', '"_dP', { desc = 'paste without repalceing register content' }) -- Yank in void register on put to preserve current yanked register. Helpful on repeated puts.
 
+  -- Open TODO quick fix list
+  vim.keymap.set('n', '<leader>otd', ':TodoQuickFix<CR>', { desc = 'Open TodoQuickFix' })
+
   -- [[ Basic Autocommands ]]
   --  See `:help lua-guide-autocommands`
 
