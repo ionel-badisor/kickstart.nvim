@@ -282,6 +282,18 @@ do
   -- Open TODO quick fix list
   vim.keymap.set('n', '<leader>otd', ':TodoQuickFix<CR>', { desc = 'Open TodoQuickFix' })
 
+  -- Remove trailing white spaces keymap
+  vim.keymap.set('n', '<leader>rtw', function()
+    -- save current window view
+    local windowView = vim.fn.winsaveview()
+
+    --execute: keeppatterns %s/\s\+$//e
+    vim.cmd [[keeppatterns %s/\s\+$//e]]
+
+    -- reset the window
+    vim.fn.winrestview(windowView)
+  end, { desc = 'remove trailing whitespace' })
+
   -- [[ Basic Autocommands ]]
   --  See `:help lua-guide-autocommands`
 
