@@ -294,6 +294,10 @@ do
     vim.fn.winrestview(windowView)
   end, { desc = 'remove trailing whitespace' })
 
+  -- Insert date time while in insert mode
+  vim.keymap.set('i', '<C-d>', '<C-r>=strftime("%Y-%m-%d>")<CR>', { desc = 'Inset date' })
+  vim.keymap.set('i', '<C-t>', '<C-r>=strftime("%Y-%m-%d@%T>")<CR>', { desc = 'Inset timestamp' })
+
   -- [[ Basic Autocommands ]]
   --  See `:help lua-guide-autocommands`
 
