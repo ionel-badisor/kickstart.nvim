@@ -183,6 +183,12 @@ do
   -- instead raise a dialog asking if you wish to save the current file(s)
   -- See `:help 'confirm'`
   vim.o.confirm = true
+
+  -- Folding
+  vim.opt.foldmethod = 'expr'
+  vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+  vim.opt.foldtext = 'nvim.treesitter#foldtext()'
+  vim.opt.foldenable = false
 end
 
 -- ============================================================
