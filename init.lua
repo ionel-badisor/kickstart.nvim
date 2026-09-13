@@ -260,6 +260,15 @@ do
   vim.keymap.set('n', '<leader>le', ':set spelllang=en_us<CR>', { desc = 'Change spell language to en_us' })
   vim.keymap.set('n', '<leader>lr', ':set spelllang=ro<CR>', { desc = 'Change spell language to ro' })
 
+  vim.keymap.set('n', '<leader>y', '"+y', { desc = 'yank in system clipboard' }) --Yank in system clipboard
+  vim.keymap.set('v', '<leader>y', '"+y', { desc = 'yank in system clipboard' }) --Yank in system clipboard
+  vim.keymap.set('n', '<leader>Y', '"+Y', { desc = 'yank in system clipboard' }) --Yank in system clipboard
+
+  vim.keymap.set('n', '<leader>d', '"_d', { desc = 'yank delete in system clipboard' }) --Yank from system clipboard
+  vim.keymap.set('v', '<leader>d', '"_d', { desc = 'yank delete in system clipboard' }) --Yank from system clipboard
+
+  vim.keymap.set('x', '<leader>p', '"_dP', { desc = 'paste without repalceing register content' }) -- Yank in void register on put to preserve current yanked register. Helpful on repeated puts.
+
   -- [[ Basic Autocommands ]]
   --  See `:help lua-guide-autocommands`
 
